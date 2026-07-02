@@ -1,0 +1,43 @@
+body {
+    background-color: #0f172a;
+}
+
+.title {
+    color: white;
+    font-size: 52px;
+    font-weight: bold;
+}
+
+.title span {
+    color: #00d4ff;
+}
+
+.stButton>button {
+    background: linear-gradient(90deg,#00d4ff,#7b2ff7);
+    color: white;
+    border-radius: 12px;
+    border: none;
+    padding: 12px 28px;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.stButton>button:hover {
+    transform: scale(1.05);
+}
+
+div[data-testid="stSidebar"] {
+    background: #111827;
+}
+
+.stProgress > div > div > div {
+    background: linear-gradient(90deg,#00d4ff,#7b2ff7);
+}
+
+h1,h2,h3 {
+    color: white;
+}
+
+p,li {
+    color: #d1d5db;
+}
