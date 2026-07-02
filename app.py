@@ -1,38 +1,70 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 from PIL import Image
-import plotly.graph_objects as go
-import os
+from pathlib import Path
+import base64
 
-# ----------------------------------------------------
+# -------------------------------------------------
 # PAGE CONFIG
-# ----------------------------------------------------
+# -------------------------------------------------
 
 st.set_page_config(
-    page_title="Vijayadharshan R",
+    page_title="Vijayadharshan R | AI Portfolio",
     page_icon="🤖",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="collapsed",
 )
 
-# ----------------------------------------------------
+# -------------------------------------------------
 # LOAD CSS
-# ----------------------------------------------------
+# -------------------------------------------------
 
-def local_css(file_name):
-    if os.path.exists(file_name):
-        with open(file_name) as f:
-            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+def load_css():
+    css_file = Path("style.css")
+    if css_file.exists():
+        st.markdown(
+            f"<style>{css_file.read_text()}</style>",
+            unsafe_allow_html=True,
+        )
 
-local_css("style.css")
+load_css()
 
-# ----------------------------------------------------
-# NAVIGATION
-# ----------------------------------------------------
+# -------------------------------------------------
+# HELPERS
+# -------------------------------------------------
+
+def file_exists(path):
+    return Path(path).exists()
+
+
+def download_resume():
+    resume = Path("assets/resume.pdf")
+
+    if resume.exists():
+        with open(resume, "rb") as pdf:
+            st.download_button(
+                "📄 Download Resume",
+                pdf,
+                file_name="Vijayadharshan_Resume.pdf",
+                mime="application/pdf",
+            )
+
+
+# -------------------------------------------------
+# NAVBAR
+# -------------------------------------------------
 
 selected = option_menu(
     None,
-    ["Home", "About", "Skills", "Projects", "Education", "Certificates", "Contact"],
+    [
+        "Home",
+        "About",
+        "Skills",
+        "Projects",
+        "Education",
+        "Certificates",
+        "Contact",
+    ],
     icons=[
         "house",
         "person",
@@ -40,246 +72,148 @@ selected = option_menu(
         "rocket",
         "book",
         "award",
-        "telephone",
+        "envelope",
     ],
+    default_index=0,
     orientation="horizontal",
 )
 
-# ----------------------------------------------------
-# HOME
-# ----------------------------------------------------
+# -------------------------------------------------
+# THEME TOGGLE
+# -------------------------------------------------
+
+if "dark" not in st.session_state:
+    st.session_state.dark = True
+
+col_theme, _ = st.columns([1, 6])
+
+with col_theme:
+
+    if st.toggle("🌙 Dark Mode", value=True):
+        st.session_state.dark = True
+    else:
+        st.session_state.dark = False
+
+# -------------------------------------------------
+# HERO SECTION
+# -------------------------------------------------
 
 if selected == "Home":
 
-    left, right = st.columns([1, 2])
+    left, right = st.columns([1, 2], gap="large")
 
     with left:
 
-        if os.path.exists("profile_image.png"):
-            image = Image.open("profile_image.png")
-            st.image(image, width=300)
+        profile = Path("assets/profile.png")
+
+        if profile.exists():
+            st.image(Image.open(profile), use_container_width=True)
+        else:
+            st.info("Add assets/profile.png")
 
     with right:
 
-        st.markdown("<h4>HELLO 👋</h4>", unsafe_allow_html=True)
-
         st.markdown(
             """
-            <h1 class='gradient'>
-            Vijayadharshan R
-            </h1>
+            <div class="hero-small">
+            👋 Hello, I'm
+            </div>
             """,
             unsafe_allow_html=True,
         )
 
-        st.subheader("AI Engineer")
-        st.subheader("Machine Learning Developer")
-        st.subheader("Data Scientist")
+        st.markdown(
+            """
+            <div class="hero-title">
+            Vijayadharshan R
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+        st.markdown(
+            """
+            <div class="hero-sub">
+            AI Engineer • Machine Learning Developer • Data Scientist
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+        st.write("")
 
         st.write(
             """
-Artificial Intelligence & Data Science undergraduate passionate about
-building intelligent AI-powered applications using Machine Learning,
-Python and Data Science.
+Artificial Intelligence & Data Science undergraduate passionate
+about building intelligent AI-powered applications.
+
+I enjoy Machine Learning, Data Analytics,
+Deep Learning, Python, Java and Streamlit.
 """
         )
 
-        col1, col2 = st.columns(2)
+        c1, c2, c3 = st.columns(3)
 
-        with col1:
-            st.download_button(
-                "📄 Download Resume",
-                open("resume.pdf", "rb"),
-                file_name="Resume.pdf",
-            )
+        with c1:
+            download_resume()
 
-        with col2:
+        with c2:
             st.link_button(
-                "💻 GitHub",
-                "https://github.com/"
+                "GitHub",
+                "https://github.com/yourusername",
+                use_container_width=True,
             )
 
-st.markdown("---")
+        with c3:
+            st.link_button(
+                "LinkedIn",
+                "https://linkedin.com/in/yourusername",
+                use_container_width=True,
+            )
 
-# ----------------------------------------------------
-# ABOUT
-# ----------------------------------------------------
+# -------------------------------------------------
+# STATS
+# -------------------------------------------------
+
+st.write("")
+
+a, b, c, d = st.columns(4)
+
+a.metric("Projects", "2+")
+b.metric("Certificates", "10+")
+c.metric("Languages", "6+")
+d.metric("Experience", "AI & DS")
+
+st.divider()
+
+# -------------------------------------------------
+# PLACEHOLDERS
+# -------------------------------------------------
 
 if selected == "About":
+    st.title("👨 About Me")
+    st.info("About section will be added in Part 2.")
 
-    st.title("About Me")
+elif selected == "Skills":
+    st.title("🛠 Skills")
+    st.info("Interactive Plotly dashboard coming in Part 2.")
 
-    st.write(
-        """
-Artificial Intelligence & Data Science undergraduate with a strong
-passion for solving real-world problems using Artificial Intelligence,
-Machine Learning and Data Science.
+elif selected == "Projects":
+    st.title("🚀 Projects")
+    st.info("Premium project cards coming in Part 2.")
 
-I enjoy creating intelligent systems, beautiful dashboards and
-interactive applications using Python and Streamlit.
-"""
-    )
+elif selected == "Education":
+    st.title("🎓 Education")
+    st.info("Timeline section coming in Part 2.")
 
-st.markdown("---")
+elif selected == "Certificates":
+    st.title("🏆 Certificates")
+    st.info("Glassmorphism certificate cards coming in Part 2.")
 
-# ----------------------------------------------------
-# SKILLS
-# ----------------------------------------------------
+elif selected == "Contact":
+    st.title("📬 Contact")
+    st.info("Animated contact section coming in Part 2.")
 
-if selected == "Skills":
+st.divider()
 
-    st.title("Technical Skills")
-
-    skills = {
-        "Java":95,
-        "Python":92,
-        "Machine Learning":90,
-        "Data Science":90,
-        "SQL":82,
-        "Power BI":80,
-        "HTML/CSS":85,
-        "JavaScript":75
-    }
-
-    fig = go.Figure()
-
-    fig.add_trace(
-        go.Bar(
-            x=list(skills.keys()),
-            y=list(skills.values())
-        )
-    )
-
-    fig.update_layout(
-        template="plotly_dark",
-        height=500,
-        title="Skill Levels"
-    )
-
-    st.plotly_chart(fig, use_container_width=True)
-
-st.markdown("---")
-
-# ----------------------------------------------------
-# PROJECTS
-# ----------------------------------------------------
-
-if selected == "Projects":
-
-    st.title("Projects")
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-
-        st.subheader("☕ Coffee Sales Prediction")
-
-        st.write("""
-✔ Linear Regression
-
-✔ Streamlit
-
-✔ Sales Forecast
-
-✔ Temperature Analysis
-
-✔ Customer Prediction
-""")
-
-    with col2:
-
-        st.subheader("🛡 Insurance Prediction")
-
-        st.write("""
-✔ Logistic Regression
-
-✔ Classification
-
-✔ Streamlit
-
-✔ Customer Prediction
-
-✔ ML Deployment
-""")
-
-st.markdown("---")
-
-# ----------------------------------------------------
-# EDUCATION
-# ----------------------------------------------------
-
-if selected == "Education":
-
-    st.title("Education")
-
-    st.info("""
-🎓 B.Tech AI & DS
-
-Rathinam Technical Campus
-
-2024 - Present
-""")
-
-    st.success("""
-HSC
-
-70%
-""")
-
-    st.warning("""
-SSLC
-
-58%
-""")
-
-st.markdown("---")
-
-# ----------------------------------------------------
-# CERTIFICATES
-# ----------------------------------------------------
-
-if selected == "Certificates":
-
-    st.title("Certificates")
-
-    certificates = [
-        "IBM AI",
-        "IBM Data Science",
-        "Java HackerRank",
-        "Power BI",
-        "Git & GitHub",
-        "HTML & CSS",
-        "Ethical Hacking",
-        "Design Thinking",
-        "Excel",
-        "AI Internship"
-    ]
-
-    cols = st.columns(2)
-
-    for i, cert in enumerate(certificates):
-        cols[i % 2].success(cert)
-
-st.markdown("---")
-
-# ----------------------------------------------------
-# CONTACT
-# ----------------------------------------------------
-
-if selected == "Contact":
-
-    st.title("Contact")
-
-    st.write("📧 dharshanvijay7727@gmail.com")
-
-    st.write("📱 +91 6384227515")
-
-    st.write("📍 Coimbatore")
-
-    st.link_button("LinkedIn", "https://linkedin.com")
-
-    st.link_button("GitHub", "https://github.com")
-
-st.markdown("---")
-
-st.caption("© 2026 Vijayadharshan R | Built with Streamlit")
+st.caption("© 2026 Vijayadharshan R • Built with Streamlit")
