@@ -1,43 +1,283 @@
-body {
-    background-color: #0f172a;
+/* ==============================
+   IMPORT FONT
+============================== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* ==============================
+   GLOBAL
+============================== */
+
+html, body, [class*="css"] {
+    font-family: 'Poppins', sans-serif;
 }
 
-.title {
-    color: white;
-    font-size: 52px;
-    font-weight: bold;
+.stApp{
+    background: linear-gradient(135deg,#0f172a,#111827,#1e293b);
+    color:white;
 }
 
-.title span {
-    color: #00d4ff;
+/* Hide Streamlit UI */
+
+#MainMenu{
+    visibility:hidden;
 }
 
-.stButton>button {
-    background: linear-gradient(90deg,#00d4ff,#7b2ff7);
-    color: white;
-    border-radius: 12px;
-    border: none;
-    padding: 12px 28px;
-    font-size: 18px;
-    transition: 0.3s;
+footer{
+    visibility:hidden;
 }
 
-.stButton>button:hover {
-    transform: scale(1.05);
+header{
+    visibility:hidden;
 }
 
-div[data-testid="stSidebar"] {
-    background: #111827;
+/* ==============================
+   HERO
+============================== */
+
+.hero-small{
+
+    color:#38bdf8;
+
+    font-size:22px;
+
+    font-weight:600;
+
 }
 
-.stProgress > div > div > div {
-    background: linear-gradient(90deg,#00d4ff,#7b2ff7);
+.hero-title{
+
+    font-size:64px;
+
+    font-weight:800;
+
+    background:linear-gradient(90deg,#38bdf8,#8b5cf6);
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
+    margin-bottom:10px;
+
 }
 
-h1,h2,h3 {
-    color: white;
+.hero-sub{
+
+    font-size:28px;
+
+    color:#cbd5e1;
+
+    margin-bottom:25px;
+
 }
 
-p,li {
-    color: #d1d5db;
+/* ==============================
+   GLASS CARD
+============================== */
+
+.glass{
+
+background:rgba(255,255,255,.08);
+
+border:1px solid rgba(255,255,255,.15);
+
+border-radius:20px;
+
+padding:25px;
+
+backdrop-filter:blur(16px);
+
+transition:.4s;
+
+box-shadow:0 10px 30px rgba(0,0,0,.35);
+
+}
+
+.glass:hover{
+
+transform:translateY(-8px);
+
+box-shadow:0 20px 50px rgba(0,0,0,.5);
+
+}
+
+/* ==============================
+   BUTTONS
+============================== */
+
+.stButton>button{
+
+background:linear-gradient(90deg,#2563eb,#8b5cf6);
+
+color:white;
+
+font-weight:700;
+
+border:none;
+
+padding:.75rem 1.4rem;
+
+border-radius:14px;
+
+transition:.35s;
+
+}
+
+.stButton>button:hover{
+
+transform:scale(1.05);
+
+box-shadow:0 0 25px rgba(59,130,246,.6);
+
+}
+
+/* ==============================
+   DOWNLOAD BUTTON
+============================== */
+
+[data-testid="stDownloadButton"] button{
+
+background:linear-gradient(90deg,#0ea5e9,#8b5cf6);
+
+border:none;
+
+border-radius:15px;
+
+color:white;
+
+font-weight:700;
+
+}
+
+/* ==============================
+   METRIC CARDS
+============================== */
+
+[data-testid="metric-container"]{
+
+background:rgba(255,255,255,.08);
+
+border-radius:18px;
+
+padding:18px;
+
+border:1px solid rgba(255,255,255,.1);
+
+backdrop-filter:blur(18px);
+
+transition:.3s;
+
+}
+
+[data-testid="metric-container"]:hover{
+
+transform:translateY(-6px);
+
+}
+
+/* ==============================
+   SIDEBAR
+============================== */
+
+section[data-testid="stSidebar"]{
+
+background:#111827;
+
+}
+
+/* ==============================
+   LINKS
+============================== */
+
+a{
+
+text-decoration:none;
+
+color:#38bdf8;
+
+font-weight:600;
+
+}
+
+/* ==============================
+   SCROLLBAR
+============================== */
+
+::-webkit-scrollbar{
+
+width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:#111827;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:#3b82f6;
+
+border-radius:20px;
+
+}
+
+/* ==============================
+   IMAGE
+============================== */
+
+img{
+
+border-radius:25px;
+
+box-shadow:0 15px 40px rgba(0,0,0,.45);
+
+transition:.4s;
+
+}
+
+img:hover{
+
+transform:scale(1.02);
+
+}
+
+/* ==============================
+   TITLES
+============================== */
+
+h1,h2,h3,h4{
+
+color:white;
+
+font-weight:700;
+
+}
+
+p{
+
+color:#d1d5db;
+
+line-height:1.8;
+
+}
+
+/* ==============================
+   RESPONSIVE
+============================== */
+
+@media(max-width:768px){
+
+.hero-title{
+
+font-size:42px;
+
+}
+
+.hero-sub{
+
+font-size:20px;
+
+}
+
 }
